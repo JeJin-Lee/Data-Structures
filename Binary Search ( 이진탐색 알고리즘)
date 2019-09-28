@@ -1,0 +1,48 @@
+// 재귀함수를 이용한 경우
+#include <stdio.h>
+
+int BSearchRecur(int arr[], int first, int last, int target)
+{
+  int mid;
+  if(first>last)
+  return -1;
+  mid  = (first+last)/2;
+  
+  if(arr[mid] == target)
+  return mid;
+  
+  else if(target<arr[mid])
+  return BSearch(arr, first, mid-1, target);
+  
+  else
+  return BSearch(arr, mid+1, last, target);
+ }
+ 
+ 
+ // 일반적인 경우
+ #include <stdio.h>
+ 
+ int BSearch(int arr[], int len, int target)
+ {
+    int first = 0;
+    int last = len-1;
+    int mid;
+    
+    while(first <= last){
+      mid = (first+last) / 2;
+      
+      if(target == arr[mid])
+      return mid;
+      
+     else{
+        if(target < arr[mid])
+          last = mid-1;
+        
+        else
+          first = mid+1;
+         }
+      }
+      retrun -1;
+     }
+
+  
