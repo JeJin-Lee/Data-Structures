@@ -36,7 +36,7 @@ int BSearchRecur(int arr[], int first, int last, int target)
       
      else{
         if(target < arr[mid])
-          last = mid-1;
+          last = mid-1;                 // 왜 -1을 하고, +1을 하는지를 놓치지 말자
         
         else
           first = mid+1;
