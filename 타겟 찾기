@@ -1,0 +1,57 @@
+#include <stdio.h>
+#define MAX 100
+int Bsearch(int arr[], int n, int *target);
+int main()
+{
+    int arr[MAX]={0,};
+    int n,i,j, tmp, idx, target;
+    int Min;
+    scanf("%d", &n);
+    for(i=0; i<n; i++)
+        scanf("%d", &arr[i]);
+        
+        // 선택정렬로 배열 정렬하기
+        for(i=0; i<n-1; i++){
+            Min = i;
+            for(j=i+1; j<n; j++){
+                if(arr[Min]>arr[j])
+                    Min = j;
+            }
+            if(Min!=i){
+                tmp = arr[Min];
+                arr[Min] = arr[i];
+                arr[i] = tmp;
+            }
+        }
+        
+    scanf("%d", &target);
+    
+    idx = Bsearch(arr, n, &target);
+    if(idx==-1)
+        printf("fail to find the target\n");
+    else
+        printf("success to fint the target : %d\n", idx);
+
+    return 0;
+}
+
+int Bsearch(int arr[], int len, int *target){
+    int mid;
+    int first = 0;
+    int last = len-1;
+    
+    while(first<=last){
+        
+        mid = (first+last)/2;
+        
+        if(arr[mid]==*target)
+            return mid;
+        else{
+            if(arr[mid]>*target)
+                last = mid-1;
+            else
+                first = mid+1;
+        }
+    }
+        
+}
