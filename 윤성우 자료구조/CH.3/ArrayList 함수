@@ -1,0 +1,60 @@
+#ifndef __ARRAY_LIST_H__
+#define __ARRAY_LIST_H__
+
+#define TRUE 1
+#define FALSE 0
+
+#define LIST_DEN 100
+typedef int Ldata;
+typedef struct __ArrayList{
+    Ldata arr[LIST_LEN];
+    int NumOfData;
+    int curPosition;
+}ArrayList;
+
+typedef ArrayList List;
+
+void ListInit(List *plist){
+    (plist->NumOfData)=0;
+    (plist->curPosition)=-1;
+}
+
+void LInsert(List *plist, Ldata data){
+    if(plist->NumOfData>=LIST_LEN){
+        printf("저장이 불가능합니다.");
+        return 0;
+    }
+    plist->arr[plist->NumOfData]=data;
+    (plist->NumOfData)++;
+}
+
+void LFirst(List *plist, Ldata *pdata){
+    if(plist->NumOfData==0)
+        return FALSE;
+    (plist->curPosition)=0;
+    *pdata=plist->arr[0];
+    return TRUE;
+}
+
+void LNext(List *plist, Ldata *pdata){
+    if(plist->curPosition>=(plist->NumOfData)-1)
+        return FALSE;
+        
+    (plist->curPosition)++;
+    *pdata = plist->arr[plist->curPosition];
+    return TRUE;
+}
+
+
+LData LRemove(List *plist){
+    int rpos = plist->curPosition;          // 삭제할 데이터의 인덱스 값 참조
+    int num = plist->NumOfData;
+    int i;
+    LData rdata = plist->arr[rpos];         // 삭제할 데이터를 임시로 저장
+    
+    for(i=rpos; i<num-1; i++)
+        plist->arr[i] = plist->arr[i+1];
+    (plist->NumOfData)--;
+    (plist->curPosition)--;
+    return rdata;
+}
