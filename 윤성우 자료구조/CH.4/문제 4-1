@@ -1,0 +1,42 @@
+새 노드를 연결 리스트의 꼬리가 아닌 머리에 추가하려고 할 때,
+연결 리스트의 머리에 노드가 추가되도록 예제를 변경하라
+
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct _node{
+    int data;
+    struct _node *next;
+}node;
+
+int main(){
+    Node *head = NULL;
+    Node *tail = NULL;
+    Node *cur = NULL;
+    
+    Node *newNode = NULL;
+    int readData;
+    
+    while(1){
+        printf("자연수 입력 : ");
+        scanf("%d", &readData);
+        if(readData<1)
+            break;
+        
+        newNode = malloc(sizeof(Node));
+        newNode->data = readData;
+        newNode->next = NULL;
+        
+        if(head==NULL){
+            head = newNode;
+            tail = newNode;
+        }
+        else{
+            newNode->next = head;
+            head = newNode;
+        }
+            
+    }
+}
+
+핵심은 30~36줄이다.
