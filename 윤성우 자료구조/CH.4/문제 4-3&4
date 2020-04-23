@@ -1,0 +1,16 @@
+3은 생략
+
+4.
+int WhoIsPrecede(Point *d1, Point *d2){
+if(d1->xpos < d2->xpos)
+  return 0;
+  
+else if(d1->xpos == d2->xpos){
+  if(d1->ypos < d2->ypos)
+    return 0;
+  else
+    return 1;
+}
+else
+  return 1;
+}
