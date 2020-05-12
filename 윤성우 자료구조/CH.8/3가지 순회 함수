@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include "BinaryTree.h"
+
+void InorderTraverse(BTreeNode *bt){    // 중위 순회 함수
+    if(bt==NULL)
+        return;         // bt가 NULL이면 재귀를 탈출한다
+    
+    InorderTraverse(bt->left);
+    printf("%d \n", bt->data);
+    InorderTraverse(bt->right);
+}
+
+void PreorderTraverse(BTreeNode *bt){       // 전위 순회 함수
+    if(bt==NULL)
+        return;
+    printf("%d \n", bt->data);
+    PreorderTraverse(bt->left);
+    PreorderTraverse(bt->right);    
+}
+
+void PostorderTraverse(BTreeNode *bt){      // 후위 순회 함수
+    if(bt==NULL)
+        return;
+    
+    PostorderTraverse(bt->left);
+    PostorderTraverse(bt->right);
+    printf("%d \n", bt->data);
+}
