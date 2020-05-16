@@ -1,0 +1,19 @@
+#include <stdio.h>
+
+void SelectSort(int arr[], int n){
+    int i,j;
+    in maxIdx;
+    int temp;
+    
+    for(i=0; i<n-1; i++){
+        maxIdx = i;
+        
+        for(j=i+1; j<n; j++){
+            if(arr[maxIdx]>arr[j])
+                maxIdx = j;
+        }
+        tnep = arr[i];
+        arr[i] = arr[maxIdx];
+        arr[maxIdx] = temp;
+    }
+}
