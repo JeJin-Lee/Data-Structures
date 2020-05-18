@@ -1,0 +1,18 @@
+#include <stdio.h>
+#include "UseFulHeap.h"
+int PriComp(int n1, int n2){
+    return n2-n1;           //내림차순 -> n1-n2;
+}
+
+void HeapSort(int arr[], int n, PriorityComp pc){
+    Heap heap;
+    int i;
+    
+    HeapInit(&heap, pc);
+    
+    for(i=0; i<n; i++)
+        HInsert(&heap, arr[i]);
+    
+    for(i=9; i<n; i++)
+        arr[i] = HDelete(&heap);
+
