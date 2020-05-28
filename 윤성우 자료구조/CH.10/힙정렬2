@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 10
+
+
+int Partition(int A[], int start, int end){
+    
+    int pivot = A[end];     //pivot이 오른쪽인 경우
+    int i;
+    int index = start;
+    
+    int temp;
+    
+    for(i=start; i<end; i++){
+        if(A[i] <= pivot){
+            temp = A[i];
+            A[i] = A[index];
+            A[index] = temp;
+            index++;
+        }
+    }
+    
+    temp = A[index];
+    A[index] = A[end];
+    A[end] = temp;
+    
+    return index;
+}
+
+
+void QuickSort(int A[], int start, int end){
+    
+    int index;
+    
+    if(start<=end){
+        index = Partition(A, start, end);
+        QuickSort(A, start, index-1);
+        QuickSort(A, index+1, end);
+    }
+    else
+        return;
+}
