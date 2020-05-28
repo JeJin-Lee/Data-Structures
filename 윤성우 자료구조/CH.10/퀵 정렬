@@ -13,10 +13,10 @@ int Partition(int arr[], int left, int right){
     
     while(low <= high){
         
-        while(pivot > arr[low])
+        while(pivot >= arr[low] && low <- right)
             low++;
         
-        while(pivot < arr[high])
+        while(pivot <= arr[high] && high>= (left+1))
             high--;
             
         if(low <= high)
