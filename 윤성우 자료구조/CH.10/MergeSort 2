@@ -1,0 +1,43 @@
+void MergeTwoArea(int arr[], int left, int mid, int right){
+    int fidx = left;
+    int ridx = mid + 1;
+    int i;
+    
+    int *sortarr = malloc(sizeof(int)*(right+1));
+    int sidx = left;
+    
+    while(fidx <= mid && ridx <= right){
+        if(arr[fidx] < arr[ridx])
+            sortarr[sidx] = arr[fidx++];
+        else
+            sortarr[sidx] = arr[ridx++];
+        
+        sidx++;
+    }
+    
+    if(fidx > mid){
+        for(i=ridx; i<=right; i++, sidx++)
+            sortarr[sidx] = arr[i];
+    }
+    else{
+        for(i=fidx; i<=mid; i++, sidx++)
+            sortarr[sidx] = arr[i];
+    }
+    
+    free(sortarr);
+}
+
+void MergeSort(int arr[], int left, int right){
+    
+    int mid;
+    
+    if(left<right){
+        
+        mid = (left + right)/2;
+        
+        MergeSort(arr, left, mid);
+        MergeSort(arr, mid+1, right);
+        
+        MergeTwoArea(arr, left, mid, right);
+    }
+}
