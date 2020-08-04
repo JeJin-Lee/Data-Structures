@@ -1,0 +1,88 @@
+#ifndef __DBD_LINKED_LIST_H__
+#define __DBD_LINKED_LIST_H__
+
+#define TRUE    1
+#define FALSE   0
+
+typedef int Data;
+
+typedef struct _node{
+    Data data;
+    struct _node *next;
+    struct _node *prev;
+}node;
+
+typedef struct _dbLinkedList{
+    node *head;
+    node *tail;
+    node *cur;
+    int numofdata;
+}DBLinkedList;
+
+typedef DBLinkedList list;
+
+void ListInit(list *plist, Data data){
+    plist->head = malloc(sizeof(node));         // head, tail의 더미노드 생성
+    plsit->tail = malloc(sizeof(node));
+    
+    plist->head->prev = NULL;
+    plist->tail->next = NULL;
+    plist->head->next = plist->tail;
+    plist->tail->prev = plist->head;
+    
+    (plist->numofdata) = 0;
+}
+
+void LInsert(list *plist, Data data){
+    
+    node *newnode = malloc(sizeof(node));
+    newnode->data = data;
+        
+    newnode->prev = plist->tail->prev;
+    plist->tail->prev->next = newnode;
+    
+    newnode->next = plist->tail;
+    plist->tail->prev = newnode;
+    
+    (plist->numofdata)++;
+}
+
+int LFirst(list *plist, Data *pdata){
+    
+    if(plist->head->next == plist->tail)
+        return FALSE;
+    
+    plist->cur = plist->head->next;
+    *pdata = plist->cur->data;
+    return TRUE;
+}
+
+int LNext(list *plist, Data *pdata){
+    if(plist->cur->next == plist->tail)
+        return FALSE;
+    
+    plist->cur = plist->cur->next;
+    *pdata = plist->cur->data;
+    return TRUE;
+}
+
+Data LRemove(list *plist){
+    
+    node *rpos = plist->cur;
+    Data rdata = rpos->data;
+    
+    plist->cur->prev->next = plist->cur->next;
+    plist->cur->next->prev = plist->cur->prev;
+    
+    plist->cur = plist->cur->prev;
+    
+    free(rpos);
+    (plist->numofdata)--;
+    return rdata;
+}
+
+int LCount(list *plist){
+    return plist->numofdata;
+}
+
+#endif
