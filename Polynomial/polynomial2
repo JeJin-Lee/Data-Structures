@@ -1,0 +1,136 @@
+int eval(Polynomial *poly, int x){      // 다항식의 값을 계산하는 함수
+    int result = 0;
+    Term *t = poly->first;
+    
+    while(t!= NULL){
+        result += eval(t,x);            // 각각의 항의 값을 계산하여 더한다
+        t = t->next;
+    }
+    return result;
+}
+
+int eval(Term *term, int x){            // 하나의 항의 값을 계산하는 함수
+    int result = term->coef;
+    for(int i=0; i<term->expo; i++){
+        result *= x;
+    }
+    return result;
+}
+
+void print_poly(Polynomial *p){
+    printf("%c=" , p->name);
+    Term *t = p->first;
+    
+    while(t!=NULL){
+        printf_term(t);
+        printf("+");
+        t = t->next;
+    }
+}
+
+void print_term(Term *pTerm){
+    printf("%dx^%d", pTerm->coef, pTerm->expo);         // 완벽하지 않게 출력됨 , ex) +- 같이 나오거나 등등.. -> 개선해야함
+}
+
+void process_command(){
+    
+    char command_line[BUFFER_LENGTH];
+    char copied[BUFFER_LENGTH];
+    char *command, *arg1, *arg2;
+    
+    while(1){
+        printf("$ ");
+        if(read_line(stdin, command_line, BUFFER_LENGTH) <= 0)
+            continue;
+        strcpy(copied, command_line);           // 입력 라인을 복사해둔다
+        command = strtok(command_line, " ");
+        
+        if(strcmp(command, "print") == 0){
+            arg1 = strtok(NULL, " ");
+            if(arg1 == NULL){
+                printf("Invalid arguments. \n");
+                continue;
+            }
+            handle_print(arg1[0]);
+        }
+        
+        else if(strcmp(command, "calc") == 0){
+            arg1 = strtok(NULL, " ");
+            if(arg1 == NULL){
+                printf("Invalid arguments.\n");
+                continue;
+            }
+            arg2 = strtok(NULL, " ");
+            
+            if(arg2 == NULL){
+                printf("Invalid arguments.\n");
+                continue;
+            }
+            handle_calc(arg1[0], arg2);
+        }
+        else if(strcmp(command, "exit") == 0)
+            break;
+        
+        else
+            handle_definition(copied);      // 다항식을 입력받아 정의하는 역할을 한다
+    } 
+}
+
+void handle_print(char name){
+    //해보기
+}
+
+void handle_calc(char name, char *x_str){
+    //해보기
+}
+
+void handle_definition(char *expression){
+    
+    erase_blanks(expression);       //모든 공백 문자들을 제거한다.
+    
+    char *f_name = strtok(expression, "=");
+    if(f_name == NULL || strlen(f_name) != 1){
+        printf("Unsupported command.");
+        return;
+    }
+    
+    char *exp_body = strtok(NULL, "=");
+    if(exp_body == NULL || strlen(exp_body) <=0){
+        printf("Invalid expression format.--");
+        return;
+    }
+    
+    if(exp_body[0]>='a' && exp_body[0]<='z' && exp_body[0]!='x'){
+        char *former = strtok(exp_body, "+");
+        if(former==NULL || strlen(former) != 1){
+            printf("Invalid expression format.");
+            return;
+        }
+        char *later = strtok(NULL, "+");
+        if(later==NULL || strlen(later) != 1){
+            printf("Invalid expression format.");
+            return;
+        }
+        Polynomial *pol = create_by_add_two_polynomias(f_name[0], former[0], later[0]);
+        
+        if(pol == NULL){
+            printf("Invalid expression format.");
+            return;
+        }
+        insert_polynomial(pol);
+    }
+    
+    else{
+        Polynomial *pol = create_by_parse_polynomial(f_name[0], exp_body);
+        if(pol == NULL){
+            printf("Invalid expression format.");
+            return;
+        }
+        insert_polynomial(pol);
+    }
+}
+
+
+void erase_blanks(char *expression){            // 모든 공백 문자들을 제거하여 압축한다. 문자열 마지막에 '\0' 추가하는거 빼먹으면 안된다
+    //해보기
+}
